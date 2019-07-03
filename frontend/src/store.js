@@ -83,6 +83,26 @@ export default new Vuex.Store({
             await commit("SET_PROVIDERS", response.data.data);
         },
 
+        CREATE_PROVIDER: async ({dispatch}, payload) => {
+            const response = await Vue.http.post(`providers`, payload);
+            await dispatch("EMIT_NOTIFICATION", {
+                message: response.data.message,
+                status: 'info',
+                trigger: true
+            });
+            await dispatch("GET_PROVIDERS");
+        },
+
+        DELETE_PROVIDER: async ({dispatch}, payload) => {
+            const response = await Vue.http.delete(`providers/${payload._id}`);
+            await dispatch("EMIT_NOTIFICATION", {
+                message: response.data.message,
+                status: 'info',
+                trigger: true
+            });
+            await dispatch("GET_PROVIDERS");
+        },
+
         GET_CLIENTS: async ({commit}) => {
             const response = await Vue.http.get(`clients`);
             await commit("SET_CLIENTS", response.data.data);
@@ -111,7 +131,7 @@ export default new Vuex.Store({
         },
 
         DELETE_CLIENT: async ({dispatch}, payload) => {
-            const response = await Vue.http.delete(`clients/${payload._id}`, payload);
+            const response = await Vue.http.delete(`clients/${payload._id}`);
             await dispatch("EMIT_NOTIFICATION", {
                 message: response.data.message,
                 status: 'info',
