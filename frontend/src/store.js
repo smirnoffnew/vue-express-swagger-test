@@ -101,6 +101,7 @@ export default new Vuex.Store({
                 trigger: true
             });
             await dispatch("GET_PROVIDERS");
+            await dispatch("GET_CLIENTS");
         },
 
         GET_CLIENTS: async ({commit}) => {
